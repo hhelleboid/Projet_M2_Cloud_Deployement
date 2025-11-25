@@ -28,4 +28,5 @@ EXPOSE 8000
 
 # Set the command to run the application when the container starts.
 # Replace 'app.py' and '--host 0.0.0.0' with your application's specific startup command.
-CMD ["python", "app.py", "--host", "0.0.0.0", "--port", "8000"]
+# CMD ["python", "app.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["streamlit", "run", "app/query.py", "--server.port", "8000", "--server.address", "0.0.0.0"]
