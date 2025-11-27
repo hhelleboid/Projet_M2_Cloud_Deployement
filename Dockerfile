@@ -23,6 +23,8 @@ RUN ls -l
 # This assumes your dependencies are listed in a requirements.txt file at the root.
 RUN pip install --no-cache-dir -r app/requirements.txt
 
+RUN python app/chunking.py
+
 # Expose the port your application listens on (e.g., 8000 for Flask/Django, 3000 for Node)
 EXPOSE 8000
 
