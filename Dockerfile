@@ -12,9 +12,8 @@ RUN apt-get update && apt-get install -y git \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone the GitHub repository directly into the /app directory.
-# Replace <YOUR_GITHUB_ORG> and <YOUR_REPO_NAME> with your actual details.
-# NOTE: This uses the public HTTP URL. If your repo is private, see the security note below.
-RUN git clone -b docker_testing https://${GITHUB_TOKEN}@github.com/hhelleboid/Projet_Cloud_M2.git .
+# RUN git clone -b docker_testing https://${GITHUB_TOKEN}@github.com/hhelleboid/Projet_Cloud_M2.git .
+RUN git clone https://${GITHUB_TOKEN}@github.com/hhelleboid/Projet_Cloud_M2.git .
 
 # Check the files in the repo    
 RUN ls -l
