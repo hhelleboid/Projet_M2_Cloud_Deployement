@@ -6,7 +6,7 @@ variable "project_name" {
   default = "rag-chatbot"
 }
 
-# Ces variables seront remplies par GitHub Actions
+# Ces variables sont sensés etre remplies par GitHub Actions si on l'utilise
 variable "image_tag" { # le tag de l'image docker qui peut etre un hash de commit
   type = string
 }
