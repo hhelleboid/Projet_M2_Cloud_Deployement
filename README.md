@@ -47,12 +47,12 @@ Le déploiement est entièrement automatisé via le script `deploy.sh` sur Git B
 
 **Étapes de déploiement :**
 
-1. Connectez-vous à Azure :
+1. Connectez-vous à Azure (avant ou le lancement du scripts de deploiment):
 ```bash
 az login
 ```
 
-2. Rendez le script exécutable (si nécessaire) :
+2. Rendez le script exécutable :
 ```bash
 chmod +x deploy.sh
 ```
