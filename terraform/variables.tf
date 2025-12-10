@@ -15,4 +15,4 @@ variable "acr_name" { # c'est le nom du registre qui doit etre unique
   type = string
 }
 
-#  ["polandcentral","norwayeast","switzerlandnorth","spaincentral","italynorth"] pour moi voici les regions dispo 
+#  ["polandcentral","norwayeast","switzerlandnorth","spaincentral","italynorth"] pour moi voici les regions disponibles

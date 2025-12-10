@@ -35,7 +35,7 @@ resource "azurerm_container_app" "backend" {
     }
   }
 
-  ingress {
+  ingress { # defnit comment on accède à lapp
     external_enabled = false # NON accessible depuis internet
     target_port = 11434
     transport = "http"
@@ -45,7 +45,7 @@ resource "azurerm_container_app" "backend" {
     }
   }
   
-  registry {
+  registry { # ce bloc utilise les informations du secret pour s'authentifier auprès de l'ACR
     server = azurerm_container_registry.acr.login_server
     username  = azurerm_container_registry.acr.admin_username
     password_secret_name = "acr-password"
@@ -78,7 +78,7 @@ resource "azurerm_container_app" "frontend" {
     }
   }
 
-  ingress {
+  ingress { 
     external_enabled = true # OUI accessible depuis internet
     target_port = 8501
     traffic_weight {
@@ -87,7 +87,7 @@ resource "azurerm_container_app" "frontend" {
     }
   }
   
-  registry {
+  registry { 
     server = azurerm_container_registry.acr.login_server
     username = azurerm_container_registry.acr.admin_username
     password_secret_name = "acr-password"

@@ -9,7 +9,7 @@ APP_DIR="./temp_app_repo"
 
 # Couleurs pour le style
 GREEN='\033[0;32m'
-NC='\033[0m' # No Color
+NC='\033[0m' # No Color (blanc)
 
 
 echo -e "${GREEN} 1. Vérification de la connexion Azure ${NC}"
@@ -102,7 +102,7 @@ terraform apply -target=azurerm_container_registry.acr -auto-approve -var="image
 echo "Pause de 15 secondes pour s'assurer que l'ACR est prêt..."
 sleep 15
 
-# Maintenant que l'ACR existe sûr, on push les images
+# Maintenant que l'ACR existe on push les images
 echo -e "${GREEN} 5. Push des images vers Azure ${NC}"
 az acr login --name $ACR_NAME
 docker push $ACR_NAME.azurecr.io/rag-frontend:$IMAGE_TAG
