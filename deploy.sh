@@ -102,34 +102,40 @@ terraform apply -target=azurerm_container_registry.acr -auto-approve -var="image
 # echo "Pause de 15 secondes pour s'assurer que l'ACR est prêt..."
 # sleep 15
 
-MAX_RETRIES=20
-COUNT=0
-SUCCESS=false
+# MAX_RETRIES=20
+# COUNT=0
+# SUCCESS=false
 
-while [ $COUNT -lt $MAX_RETRIES ]; do
-    # On tente de résoudre le nom DNS ou de se connecter
-    if az acr check-health -n $ACR_NAME --yes --ignore-errors >/dev/null 2>&1; then
-        echo " Le registre est prêt et accessible !"
-        SUCCESS=true
-        break
-    fi
+# while [ $COUNT -lt $MAX_RETRIES ]; do
+#     # On tente de résoudre le nom DNS ou de se connecter
+#     if az acr check-health -n $ACR_NAME --yes --ignore-errors >/dev/null 2>&1; then
+#         echo " Le registre est prêt et accessible !"
+#         SUCCESS=true
+#         break
+#     fi
     
-    echo "En attente de la propagation DNS... ($COUNT/$MAX_RETRIES)"
-    sleep 10
-    COUNT=$((COUNT+1))
-done
+#     echo "En attente de la propagation DNS... ($COUNT/$MAX_RETRIES)"
+#     sleep 10
+#     COUNT=$((COUNT+1))
+# done
 
-if [ "$SUCCESS" = false ]; then
-    echo "Erreur : Le registre n'est toujours pas accessible après 3 minutes."
-    exit 1
-fi
+# if [ "$SUCCESS" = false ]; then
+#     echo "Erreur : Le registre n'est toujours pas accessible après 3 minutes."
+#     exit 1
+# fi
 
+echo "Pause de 60 secondes pour s'assurer que l'ACR est prêt..."
+sleep 60
 
 # Maintenant que l'ACR existe on push les images
 echo -e "${GREEN} 5. Push des images vers Azure ${NC}"
 az acr login --name $ACR_NAME
 docker push $ACR_NAME.azurecr.io/rag-frontend:$IMAGE_TAG
 docker push $ACR_NAME.azurecr.io/rag-backend:$IMAGE_TAG
+
+# Ajout d'une pause de sécurité pour laisser le temps à Azure d'indexer l'image
+echo "Pause de 20s pour l'indexation des images..."
+sleep 20
 
 # Maintenant que les images sont là, on déploie TOUTE l'infra (les Container Apps)
 echo -e "${GREEN}6. Finalisation du Déploiement (Container Apps) ${NC}"
