@@ -24,8 +24,8 @@ jobs:
     - name: Checkout Application Repo
       uses: actions/checkout@v3
       with:
-        repository: AxeRaoRt/Projet_Cloud_M2_App 
-        token: ${{ secrets.GH_PAT }}
+        repository: hhelleboid/Projet_Cloud_M2_App 
+        token: ${{ secrets.GH_PAT }}   # on a pas ajouté de token
         path: app-repo    
 
       

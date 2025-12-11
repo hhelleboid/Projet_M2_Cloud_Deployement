@@ -102,7 +102,7 @@ resource "azurerm_container_app" "frontend" {
 output "app_url" {
   value = azurerm_container_app.frontend.latest_revision_fqdn
 }
-output "backend_internal_url" {
-  description = "L'URL interne du backend (accessible uniquement dans le réseau Azure)"
-  value       = "http://${azurerm_container_app.backend.latest_revision_fqdn}"
-}
+# output "backend_internal_url" {
+#   description = "L'URL interne du backend (accessible uniquement dans le réseau Azure)"
+#   value       = "http://${azurerm_container_app.backend.latest_revision_fqdn}"
+# }
