@@ -1,0 +1,72 @@
+name: Deploy to Azure
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  AZURE_ResourceGroup: "rg-rag-chatbot"
+  ACR_NAME: "acrragchatbotprojectm2"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    # - uses: actions/checkout@v3
+
+    # 1. Récupérer l'infra (Infrastructure / Terraform)
+    - name: Checkout Infrastructure Repo
+      uses: actions/checkout@v3
+      with:
+        path: infra-repo  # On le met dans un sous-dossier spécifique
+
+    # 2. Récupérer l'app
+    - name: Checkout Application Repo
+      uses: actions/checkout@v3
+      with:
+        repository: AxeRaoRt/Projet_Cloud_M2_App 
+        token: ${{ secrets.GH_PAT }}
+        path: app-repo    
+
+      
+    #  3. Se connecter à Azure
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+
+
+    - name: Build and Push Docker Images
+      run: |
+        |
+          az acr login --name ${{ env.ACR_NAME }}
+          
+          # --- IMAGE 1 : FRONTEND ---
+          # On descend dans le dossier frontend du Repo A (téléchargé dans app-repo)
+          cd app-repo/app
+          
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/rag-frontend:${{ github.sha }} .
+          docker push ${{ env.ACR_NAME }}.azurecr.io/rag-frontend:${{ github.sha }}
+          
+          # On remonte à la racine pour aller ensuite dans le backend
+          cd ../backend_ollama
+          
+          # --- IMAGE 2 : BACKEND ---
+          docker build -t ${{ env.ACR_NAME }}.azurecr.io/rag-backend:${{ github.sha }} .
+          docker push ${{ env.ACR_NAME }}.azurecr.io/rag-backend:${{ github.sha }}
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+
+    - name: Terraform Apply
+      run: |
+        cd infra-repo/terraform
+        terraform init
+        terraform apply -auto-approve \
+          -var="image_tag=${{ github.sha }}" \
+          -var="acr_name=${{ env.ACR_NAME }}" \
+          -var="api_key_value=${{ secrets.APP_SECRET }}"
+
+
+#

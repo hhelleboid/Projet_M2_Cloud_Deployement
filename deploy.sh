@@ -99,31 +99,6 @@ terraform init
 echo "Création du Container Registry en priorité..."
 terraform apply -target=azurerm_container_registry.acr -auto-approve -var="image_tag=$IMAGE_TAG" -var="acr_name=$ACR_NAME"
 
-# echo "Pause de 15 secondes pour s'assurer que l'ACR est prêt..."
-# sleep 15
-
-# MAX_RETRIES=20
-# COUNT=0
-# SUCCESS=false
-
-# while [ $COUNT -lt $MAX_RETRIES ]; do
-#     # On tente de résoudre le nom DNS ou de se connecter
-#     if az acr check-health -n $ACR_NAME --yes --ignore-errors >/dev/null 2>&1; then
-#         echo " Le registre est prêt et accessible !"
-#         SUCCESS=true
-#         break
-#     fi
-    
-#     echo "En attente de la propagation DNS... ($COUNT/$MAX_RETRIES)"
-#     sleep 10
-#     COUNT=$((COUNT+1))
-# done
-
-# if [ "$SUCCESS" = false ]; then
-#     echo "Erreur : Le registre n'est toujours pas accessible après 3 minutes."
-#     exit 1
-# fi
-
 echo "Pause de 60 secondes pour s'assurer que l'ACR est prêt..."
 sleep 60
 
