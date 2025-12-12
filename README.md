@@ -101,3 +101,6 @@ Cependant, le pipeline CI/CD complet a été conçu et est disponible dans le fi
 
 > **Piste d'amélioration :**
 > Pour contourner ces restrictions en production, la solution recommandée serait d'utiliser une **Identité Managée (User Assigned Managed Identity)** pour permettre à GitHub Actions de s'authentifier sans secrets statiques.
+
+Pour des raisons non encore identifiés sur les autres navigateur autres que Google Chrome il y a des erreurs de chargement de pdfs. 
+Nous réglerons ce soucis très bientôt
