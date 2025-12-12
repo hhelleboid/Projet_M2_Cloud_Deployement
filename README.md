@@ -104,3 +104,5 @@ Cependant, le pipeline CI/CD complet a été conçu et est disponible dans le fi
 
 Pour des raisons non encore identifiés sur les autres navigateurs, autres que Google Chrome il y a des erreurs de chargement de pdfs. 
 Nous réglerons ce soucis très bientôt.
+
+Lien de test : https://ca-frontend--q8doieb.whitesky-5070b3e4.polandcentral.azurecontainerapps.io/
